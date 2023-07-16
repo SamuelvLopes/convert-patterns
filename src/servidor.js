@@ -13,6 +13,7 @@ const id_company=1;
 const app = express();
 const session = require('./entity/Session');
 const porta = 1603;
+global.venom = require('venom-bot');
 
 app.get('/',(req,res,next)=>{
     res.send({nome:'notebool',preco: 123.45});
@@ -23,16 +24,20 @@ app.post('/session/:name',(req,res,next)=>{
   .select('*')
   .where('name', '=', req.params.name)
   .where('id_company', '=', id_company)
-  .then((rows) => {
+  .then(async (rows) => {
     if(isEmpty(rows)){
       const currentSession = session();
       currentSession.name=req.params.name;
       currentSession.id_company=id_company;
       currentSession.create();
-      console.log(currentSession);
+      currentSession.qr =  await currentSession.start();
+      res.send(currentSession);
+      
+    }else{
+    res.send("já existe");
     }
   })
-    res.send({req:req.params.name,sdd:id_company});
+   
 });
 
 app.listen(porta,()=>{

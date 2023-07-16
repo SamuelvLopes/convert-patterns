@@ -32,10 +32,13 @@ class Model {
               
               console.log(novoObjeto);
               knex(this.constructor.name.toLowerCase()).
-              insert(novoObjeto)
-              .then(() => {
-                console.log('Entrada criada com sucesso!');
-                })
+              insert(novoObjeto).returning(['*'])
+              .then((rows) => {
+                this.id=rows.id;
+                console.log('Valores retornados:', rows);
+               // process.exit(); // Encerra o processo Node.js imediatamente
+
+              })
                 .catch((err) => {
                 console.error('Erro ao criar a entrada:', err);
                 })
