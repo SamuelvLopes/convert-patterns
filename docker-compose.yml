@@ -1,0 +1,22 @@
+version: '3'
+
+services:
+  postgres:
+    container_name: database
+    image: postgres
+    environment:
+      POSTGRES_USER: dev
+      POSTGRES_PASSWORD: password_dev
+      PGDATA: /data/postgres
+    volumes:
+       - "./data/postgres:/data/postgres" 
+
+    ports:
+      - "5432:5432"
+    networks:
+      - postgres_net
+    restart: unless-stopped
+
+networks:
+  postgres_net:
+    driver: bridge
