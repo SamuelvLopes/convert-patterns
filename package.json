@@ -2,7 +2,7 @@
   "name": "api-integracao-whatsapp",
   "version": "1.0.0",
   "description": "Api para integração do venom com outos sistemas",
-  "main": "src/servidor.js",
+  "main": "src/server.js",
   "scripts": {
     "start": "nodemon",
     "dev": "nodemon",
