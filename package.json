@@ -1,0 +1,24 @@
+{
+  "name": "api-integracao-whatsapp",
+  "version": "1.0.0",
+  "description": "Api para integração do venom com outos sistemas",
+  "main": "src/servidor.js",
+  "scripts": {
+    "start":"nodemon",
+    "dev":"nodemon",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Samuel Lopes",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/SamuelvLopes/api-whatsapp.git"
+  },
+  "bugs": {
+    "url": "https://github.com/SamuelvLopes/api-whatsapp/issues"
+  },
+  "homepage": "https://github.com/SamuelvLopes/api-whatsapp#readme",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
