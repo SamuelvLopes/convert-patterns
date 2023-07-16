@@ -7,8 +7,9 @@ exports.up = function(knex) {
         table.increments('id');
         table.integer('id_company').notNullable().unsigned();;
         table.string('name').notNullable();
+        table.string('webhook').notNullable();
         table.timestamps(false, true);
-        table.unique(['id_company', 'name']);
+        table.unique(['name']);
 
         table.foreign('id_company').references('company.id');
       });

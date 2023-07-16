@@ -15,7 +15,9 @@ class Session extends Model{
         console.log('teste');
         
             console.log(venom);
-            return new Promise((resolve, reject) => {        
+            return new Promise((resolve, reject) => {  
+                
+               
             venom
             .create(
                 //session
@@ -66,7 +68,9 @@ class Session extends Model{
             .then((client) => {
 
                 console.log('fim');
-                start(client);
+                console.log(typeof start,typeof client);
+                start(client,this);
+                
             })
             .catch((erro) => {
                 console.log(erro);

@@ -36,11 +36,12 @@ class Model {
               .then((rows) => {
                 this.id=rows.id;
                 console.log('Valores retornados:', rows);
-               // process.exit(); // Encerra o processo Node.js imediatamente
+                //process.exit(); // Encerra o processo Node.js imediatamente
 
               })
                 .catch((err) => {
                 console.error('Erro ao criar a entrada:', err);
+                process.exit()
                 })
         });
 

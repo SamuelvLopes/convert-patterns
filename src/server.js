@@ -11,12 +11,15 @@ global.knex = require('knex')({
   });
 const id_company=1;
 const app = express();
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 const session = require('./entity/Session');
 const porta = 1603;
 global.venom = require('venom-bot');
-
-app.get('/',(req,res,next)=>{
-    res.send({nome:'notebool',preco: 123.45});
+global.start = require('./core'); 
+app.post('/',(req,res,next)=>{
+  console.log(req.body.sssd);
+    res.send({nome:'ss',preco: 123.45});
 });
 
 app.post('/session/:name',(req,res,next)=>{
@@ -29,6 +32,7 @@ app.post('/session/:name',(req,res,next)=>{
       const currentSession = session();
       currentSession.name=req.params.name;
       currentSession.id_company=id_company;
+      currentSession.webhook=req.body.webhook;
       currentSession.create();
       currentSession.qr =  await currentSession.start();
       res.send(currentSession);
