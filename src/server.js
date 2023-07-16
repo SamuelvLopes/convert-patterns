@@ -60,6 +60,8 @@ app.post('/session/:name',(req,res,next)=>{
    
 });
 
+app.use('/files', express.static('files'));
+
 app.listen(porta,()=>{
     console.log('servidor rodando na porta '+porta);
 });
