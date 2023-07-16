@@ -1,4 +1,5 @@
 const axios = require('axios');
+const { default: cluster } = require('cluster');
 const fs = require('fs');
 const mime = require('mime-types');
 
@@ -19,9 +20,8 @@ function gerarStringAleatoria(tamanho) {
 
 module.exports= (client,session) =>{
     client.onMessage( async (message) => {
-        
-        //console.log('recebeu mensagem',message,client);
-        
+        global.clients[session.name]=client;
+        console.log('recebeu mensagem');
         console.log(session.name+':'+message.type);
         let fileName =message.type;
         if (message.type != 'chat' &&message.type != 'location' &&message.type != 'call_log') {

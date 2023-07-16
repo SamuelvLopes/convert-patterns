@@ -15,11 +15,27 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 const session = require('./entity/Session');
 const porta = 1603;
+
 global.venom = require('venom-bot');
+global.clients ={};
 global.start = require('./core'); 
 app.post('/',(req,res,next)=>{
   console.log(req.body.sssd);
     res.send({nome:'ss',preco: 123.45});
+});
+app.post('/message/:name',(req,res,next)=>{
+   
+      console.log(global.clients);
+      console.log(global.clients[req.params.name]);
+     global.clients[req.params.name]
+  .sendText(req.body.chatId, req.body.message)
+  .then((result) => {
+    console.log('Result: ', result); //return object success
+  })
+  .catch((erro) => {
+    console.error('Error when sending: ', erro); //return object error
+  });
+    res.send(global.clients);
 });
 
 app.post('/session/:name',(req,res,next)=>{
