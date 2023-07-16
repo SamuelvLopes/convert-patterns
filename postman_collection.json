@@ -1,0 +1,182 @@
+{
+	"info": {
+		"_postman_id": "af6ed22d-e5c7-4c8c-8b64-71b2aa909378",
+		"name": "API VENOM",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "16727551"
+	},
+	"item": [
+		{
+			"name": "Chat",
+			"item": [
+				{
+					"name": "Contato",
+					"item": [
+						{
+							"name": "Envio",
+							"item": [
+								{
+									"name": "Multimidia",
+									"item": [
+										{
+											"name": "Enviar PDF",
+											"request": {
+												"method": "GET",
+												"header": []
+											},
+											"response": []
+										},
+										{
+											"name": "Enviar DOCX",
+											"request": {
+												"method": "GET",
+												"header": []
+											},
+											"response": []
+										},
+										{
+											"name": "Enviar FOTO",
+											"request": {
+												"method": "GET",
+												"header": []
+											},
+											"response": []
+										},
+										{
+											"name": "Enviar VIDEO",
+											"request": {
+												"method": "GET",
+												"header": []
+											},
+											"response": []
+										},
+										{
+											"name": "Enviar Figurinha",
+											"request": {
+												"method": "GET",
+												"header": []
+											},
+											"response": []
+										}
+									]
+								},
+								{
+									"name": "Envio Mensagem",
+									"request": {
+										"method": "GET",
+										"header": []
+									},
+									"response": []
+								}
+							]
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Sessão",
+			"item": [
+				{
+					"name": "Criar sessão",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "company",
+								"value": "1",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "webhook",
+									"value": "localhost",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{host}}/session/:name",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"session",
+								":name"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "samuel",
+									"disabled": true
+								}
+							],
+							"variable": [
+								{
+									"key": "name",
+									"value": "ddsss"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "status",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "d",
+							"value": "danonde",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{host}}",
+					"host": [
+						"{{host}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "host",
+			"value": "http://localhost:1603",
+			"type": "string"
+		}
+	]
+}

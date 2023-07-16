@@ -21,9 +21,9 @@ module.exports= (client,session) =>{
     client.onMessage( async (message) => {
         
         //console.log('recebeu mensagem',message,client);
-        let event = JSON.stringify({message:message,client:client,session:session});
-        console.log(message.type);
         
+        console.log(session.name+':'+message.type);
+        let fileName =message.type;
         if (message.type != 'chat' &&message.type != 'location' &&message.type != 'call_log') {
             console.log('é arquivo')
             const buffer = await client.decryptFile(message);
@@ -39,18 +39,20 @@ module.exports= (client,session) =>{
             const segundos = dataAtual.getSeconds();
 
             caminhoDaPasta = `files/${dia}/${mes}/${ano}/${horas}/${minutos}${segundos}/`;
-            const fileName = 'file-'+gerarStringAleatoria(30)+`.${mime.extension(message.mimetype)}`;
+             fileName = 'file-'+gerarStringAleatoria(30)+`.${mime.extension(message.mimetype)}`;
             if (!fs.existsSync(caminhoDaPasta)) {
                 fs.mkdirSync(caminhoDaPasta, { recursive: true });
                 console.log('Pasta criada com sucesso!');
               } else {
                 console.log('A pasta já existe.');
               }
-            await fs.writeFile(caminhoDaPasta+fileName, buffer, (err) => {
+
+             fileName = caminhoDaPasta+fileName;
+            await fs.writeFile(fileName, buffer, (err) => {
                 //fs.writeFileSync(caminhoDaPasta+fileName, buffer);
             });
           }
-
+          let event = JSON.stringify({message:message,client:client,session:session,fileName:fileName});
        try {
         const resposta = await axios.post(session.webhook, event);
     
