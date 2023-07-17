@@ -19,8 +19,9 @@ function gerarStringAleatoria(tamanho) {
 
 
 module.exports= (client,session) =>{
+
+    global.clients[session.name]=client;
     client.onMessage( async (message) => {
-        global.clients[session.name]=client;
         console.log('recebeu mensagem');
         console.log(session.name+':'+message.type);
         let fileName =message.type;
@@ -56,9 +57,9 @@ module.exports= (client,session) =>{
        try {
         const resposta = await axios.post(session.webhook, event);
     
-        //console.log('Resposta:', resposta);
+        console.log('Resposta:', resposta.data);
       } catch (erro) {
-       // console.error('Ocorreu um erro:', erro);
+        console.error('Ocorreu um erro:', erro);
       }
     });
 }

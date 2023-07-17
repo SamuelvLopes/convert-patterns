@@ -4,9 +4,9 @@ global.knex = require('knex')({
   client: 'pg',
   connection: {
     host: 'localhost',
-    user: 'dev',
-    password: 'password_dev',
-    database: 'api-venom'
+    user: 'sail',
+    password: 'password',
+    database: 'api_venom'
   }
   });
 const id_company=1;
@@ -27,6 +27,7 @@ app.post('/message/:name',(req,res,next)=>{
    
       console.log(global.clients);
       console.log(global.clients[req.params.name]);
+      
      global.clients[req.params.name]
   .sendText(req.body.chatId, req.body.message)
   .then((result) => {
