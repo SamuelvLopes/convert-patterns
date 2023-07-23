@@ -1,4 +1,5 @@
 // app.js
+/*
 const path = require("path");
 
 const inputFilePath = "./files/23/7/2023/11/5021/teste.docx";
@@ -19,6 +20,7 @@ exec(pandocCmd, (error, stdout, stderr) => {
     console.log(error, stderr, stdout);
   }
 });
+*/
 //const { exec } = require('child_process');
 
 // Criando o objeto Receiver
