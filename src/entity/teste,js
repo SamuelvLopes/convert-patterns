@@ -1,0 +1,20 @@
+function transformarNomeDoArquivo(caminhoOriginal, novaExtensao) {
+    // Verifica se o caminhoOriginal possui a extensão ".document"
+    if (caminhoOriginal.endsWith(".document")) {
+      // Obtém o nome do arquivo sem o caminho e a extensão ".document"
+      const nomeDoArquivoSemExtensao = caminhoOriginal.split("/").pop().slice(0, -9);
+      // Adiciona a nova extensão ao nome do arquivo
+      const novoNomeDoArquivo = nomeDoArquivoSemExtensao + novaExtensao;
+      return novoNomeDoArquivo;
+    } else {
+      // Caso o caminhoOriginal não possua a extensão ".document", retorna o nome do arquivo original inalterado
+      return caminhoOriginal.split("/").pop();
+    }
+  }
+  
+  // Exemplo de uso da função
+  const caminhoOriginal = "files/23/7/2023/18/639/file-zRXpcXJlIKaBr64aAarAWTqiuDG1CL.application.vnd.openxmlformats-officedocument.wordprocessingml.document";
+  const novaExtensao = ".pdf";
+  const novoNomeDoArquivo = transformarNomeDoArquivo(caminhoOriginal, novaExtensao);
+  console.log(novoNomeDoArquivo);
+  

@@ -84,6 +84,83 @@ class Command {
      }
     
   }
+  class docxConvertCommand extends FileConverterStrategy {
+    save(){
+      console.log('save');
+    }
+    process(receiver){
+
+    }
+    transformarNomeDoArquivo(caminhoOriginal, novaExtensao) {
+      // Verifica se o caminhoOriginal possui a extensão ".document"
+      if (caminhoOriginal.endsWith(".document")) {
+        // Obtém o nome do arquivo sem o caminho e a extensão ".document"
+        const nomeDoArquivoSemExtensao = caminhoOriginal.split("/").pop().slice(0, -9);
+        // Adiciona a nova extensão ao nome do arquivo
+        const novoNomeDoArquivo = nomeDoArquivoSemExtensao + novaExtensao;
+        return novoNomeDoArquivo;
+      } else {
+        // Caso o caminhoOriginal não possua a extensão ".document", retorna o nome do arquivo original inalterado
+        return caminhoOriginal.split("/").pop();
+      }
+    }
+    execute(receiver) {
+      console.log(receiver.file);
+      const { exec } = require('child_process');
+      const pandocCmd = `libreoffice --convert-to pdf ./${receiver.file}`;
+
+      
+    console.log({});
+    exec(pandocCmd, (error, stdout, stderr) => {
+      if (error) {
+        console.error('Erro ao converter o arquivo:', stderr);
+      } else {
+        console.log('Arquivo convertido para PDF com sucesso!');
+        console.log(error,stderr,stdout);
+        console.log(this.transformarNomeDoArquivo(receiver.file,'.pdf'));
+        receiver.client
+        .sendFile(
+          receiver.message.chatId,
+          './'+this.transformarNomeDoArquivo(receiver.file,'.pdf'),
+          'file_name',
+          'Segue arquivo convertido: http://localhost:1603/'+this.transformarNomeDoArquivo(receiver.file,'.pdf')
+        )   .then((result) => {
+          //console.log('Result: ', result); //return object success
+        })
+        .catch((erro) => {
+          //console.error('Error when sending: ', erro); //return object error
+        });
+      }
+    });
+     
+    
+      
+      
+
+      /*sharp(receiver.file)
+      .toFile(receiver.file+'.png')
+      .then(() => {
+               receiver.client
+              .sendFile(
+                receiver.message.chatId,
+                receiver.file+'.png',
+                'file_name',
+                'Segue arquivo convertido: http://localhost:1603/'+receiver.file+'.png'
+              )   .then((result) => {
+                //console.log('Result: ', result); //return object success
+              })
+              .catch((erro) => {
+                //console.error('Error when sending: ', erro); //return object error
+              });
+      })
+      .catch((err) => {
+        console.error('Erro ao converter a imagem:', err);
+      });*/
+      return { file:receiver.file,mensage:receiver.file+'.pdf'};
+
+     }
+    
+  }
   class pngConvertCommand extends FileConverterStrategy {
     save(){
       console.log('save');
@@ -131,6 +208,7 @@ class Command {
       //console.log('Abrindo arquivo...'+file);
       const extension = this.getFileExtension(file);
       
+      console.log(extension);
       switch(extension){
 
         case 'jpg':
@@ -143,7 +221,7 @@ class Command {
         case 'html':   
         this.strategy = new htmlConvertCommand(this);
           break;
-        case 'docx':
+        case 'document':
         this.strategy = new docxConvertCommand(this);
           break;  
         

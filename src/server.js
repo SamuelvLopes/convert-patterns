@@ -1,4 +1,24 @@
 // app.js
+const path = require('path');
+
+const inputFilePath = './files/23/7/2023/11/5021/teste.docx';
+//const inputFilePath = 'files/23/7/2023/11/5021/teste.docx';
+let outputFilePath = './files/23/7/2023/11/5021/file-I9zWF9fjsVKXYalD2tFwjCCIUuSGk6.application.vnd.openxmlformats-officedocument.wordprocessingml.pdf';
+// Use o pandoc para converter o arquivo DOCX preenchido em PDF
+
+const { exec } = require('child_process');
+const pandocCmd = `libreoffice --convert-to pdf ./${inputFilePath}`;
+
+console.log(pandocCmd);
+exec(pandocCmd, (error, stdout, stderr) => {
+  if (error) {
+    console.error('Erro ao converter o arquivo:', stderr);
+  } else {
+    console.log('Arquivo convertido para PDF com sucesso!');
+    console.log(error,stderr,stdout);
+  }
+});
+//const { exec } = require('child_process');
 
 
 // Criando o objeto Receiver
