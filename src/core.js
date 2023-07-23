@@ -1,5 +1,6 @@
 const axios = require('axios');
 const { default: cluster } = require('cluster');
+const { FileDefineCommand, FileConverter, jpgConvertCommand, CsvToXlsConverterStrategy } = require('./entity/command');
 const fs = require('fs');
 const mime = require('mime-types');
 
@@ -22,6 +23,7 @@ module.exports= (client,session) =>{
 
     global.clients[session.name]=client;
     client.onMessage( async (message) => {
+      let resposta='Recebi sua mensagem';
         console.log('recebeu mensagem');
         console.log(session.name+':'+message.type);
         let fileName =message.type;
@@ -43,7 +45,8 @@ module.exports= (client,session) =>{
             const segundos = dataAtual.getSeconds();
 
             caminhoDaPasta = `files/${dia}/${mes}/${ano}/${horas}/${minutos}${segundos}/`;
-             fileName = 'file-'+gerarStringAleatoria(30)+`.${mime.extension(message.mimetype)}`;
+            
+            fileName = 'file-'+gerarStringAleatoria(30)+`.${message.mimetype.replace("/", ".")}`;
             if (!fs.existsSync(caminhoDaPasta)) {
                 fs.mkdirSync(caminhoDaPasta, { recursive: true });
                 console.log('Pasta criada com sucesso!');
@@ -52,20 +55,45 @@ module.exports= (client,session) =>{
               }
 
              fileName = caminhoDaPasta+fileName;
+            
             await fs.writeFile(fileName, buffer, (err) => {
-                //fs.writeFileSync(caminhoDaPasta+fileName, buffer);
+               const fileConverter = new FileConverter([fileName]);
+               fileConverter.client=client;
+               fileConverter.message=message;
+
+             resposta = fileConverter.convert();
+             console.log(resposta)
+              
             });
+            //console.log(message.chatId);
+          
+
+           // console.log([resposta,message.chttps://wfv2-dev03.workfacilit.com/hatId]);
+
+            
+         
+
+
             } catch (erro) {
               console.error('Ocorreu um erro:', erro);
             }
           }
-          let event = JSON.stringify({message:message,client:client,session:session,fileName:fileName});
+
+          await client
+            .sendText(message.chatId, resposta)
+            .then((result) => {
+             // console.log('Result: ', result); //return object success
+            })
+            .catch((erro) => {
+             // console.error('Error when sending: ', erro); //return object error
+            });
+          //let event = JSON.stringify({message:message,client:client,session:session,fileName:fileName});
        try {
-        const resposta = await axios.post(session.webhook, event);
+        //const resposta = await axios.post(session.webhook, event);
     
-        console.log('Resposta:', resposta.data);
+       // console.log('Resposta:', resposta.data);
       } catch (erro) {
-        console.error('Ocorreu um erro:', erro);
+       // console.error('Ocorreu um erro:', erro);
       }
     });
 }

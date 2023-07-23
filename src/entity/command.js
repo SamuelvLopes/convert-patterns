@@ -1,4 +1,7 @@
-  class Command {
+const sharp = require('sharp');
+const fs = require('fs');
+
+class Command {
     constructor(receiver) {
       this.receiver = receiver;
     }
@@ -19,6 +22,7 @@
       if (this.hasNext()) {
         const currentFile = this.files[this.currentIndex];
         this.currentIndex++;
+        console.log(currentFile);
         return currentFile;
       }
       return null;
@@ -56,9 +60,41 @@
 
     }
     execute(receiver) {
+      sharp(receiver.file)
+      .toFile(receiver.file+'.png')
+      .then(() => {
+               receiver.client
+              .sendFile(
+                receiver.message.chatId,
+                receiver.file+'.png',
+                'file_name',
+                'Segue arquivo convertido: http://localhost:1603/'+receiver.file+'.png'
+              )   .then((result) => {
+                //console.log('Result: ', result); //return object success
+              })
+              .catch((erro) => {
+                //console.error('Error when sending: ', erro); //return object error
+              });
+      })
+      .catch((err) => {
+        console.error('Erro ao converter a imagem:', err);
+      });
+      return { file:receiver.file,mensage:receiver.file+'.png'};
+
+     }
+    
+  }
+  class pngConvertCommand extends FileConverterStrategy {
+    save(){
+      console.log('save');
+    }
+    process(receiver){
+
+    }
+    execute(receiver) {
       
-      console.log('Convertendo arquivos de .jpg para .png no comand');
-      
+      console.log('Convertendo arquivos de .png para .jpeg no comand');
+      return receiver.file;
       // Implemente a lógica real para converter as extensões dos arquivos de .txt para .md aqui
     }
     
@@ -81,13 +117,14 @@
         const fileIterator = new FileIterator(this.files);
         while (fileIterator.hasNext()) {
 
-          const file = fileIterator.next();
-          this.DefineCommand(file);
-          this.extractContent(file);
-          this.convertContent(file);
-          this.saveFile(file);
+          this.file = fileIterator.next();
+          this.DefineCommand(this.file);
+          this.extractContent(this.file);
+          this.result = this.convertContent(this.file);
+          this.saveFile(this.file);
           this.strategy=false;
         }
+        return this.result;
       }
   
       DefineCommand(file) {
@@ -97,6 +134,7 @@
       switch(extension){
 
         case 'jpg':
+        case 'jpeg':
         this.strategy = new jpgConvertCommand(this);
           break;
         case 'png':
@@ -128,7 +166,7 @@
         if (this.strategy) {
 
             console.log('Convertendo conteúdo...'+file);
-            this.strategy.execute(this);
+            return  this.strategy.execute(this);
           } else {
             console.log('Estratégia de conversão não definida.');
           }

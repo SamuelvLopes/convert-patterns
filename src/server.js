@@ -1,11 +1,10 @@
 // app.js
 
-const { FileDefineCommand, FileConverter, jpgConvertCommand, CsvToXlsConverterStrategy } = require('./entity/command');
 
 // Criando o objeto Receiver
-const filesToConvert = ['arquivo1.jpg', 'arquivo2.txt', 'arquivo3.csv'];
+//const filesToConvert = ['arquivo1.jpg', 'arquivo2.txt', 'arquivo3.csv'];
 
-const fileConverter = new FileConverter(filesToConvert);
+//const fileConverter = new FileConverter(filesToConvert);
 
 // Criando as estratégias de conversão
 //const txtToMdStrategy = new TxtToMdConverterStrategy();
@@ -27,7 +26,7 @@ const fileConverter = new FileConverter(filesToConvert);
 //fileConverter.setStrategy(txtToMdCommand);
 
 // Executando o comando novamente
-fileConverter.convert();
+//fileConverter.convert();
 
 const express = require('express');
 
