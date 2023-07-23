@@ -4,9 +4,9 @@ global.knex = require('knex')({
   client: 'pg',
   connection: {
     host: 'localhost',
-    user: 'sail',
-    password: 'password',
-    database: 'api_venom'
+    user: 'dev',
+    password: 'password_dev',
+    database: 'postgres'
   }
   });
 const id_company=1;
@@ -19,7 +19,7 @@ const porta = 1603;
 global.venom = require('venom-bot');
 global.clients ={};
 global.start = require('./core'); 
-app.post('/',(req,res,next)=>{
+app.get('/',(req,res,next)=>{
   console.log(req.body.sssd);
     res.send({nome:'ss',preco: 123.45});
 });

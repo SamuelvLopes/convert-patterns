@@ -25,7 +25,10 @@ module.exports= (client,session) =>{
         console.log('recebeu mensagem');
         console.log(session.name+':'+message.type);
         let fileName =message.type;
-        if (message.type != 'chat' &&message.type != 'location' &&message.type != 'call_log') {
+
+        let types = ['chat', 'location', 'call_log','poll_creation','vcard'];
+        if (!types.includes(message.type)) {
+            try{
             console.log('é arquivo')
             const buffer = await client.decryptFile(message);
             // At this point you can do whatever you want with the buffer
@@ -52,6 +55,9 @@ module.exports= (client,session) =>{
             await fs.writeFile(fileName, buffer, (err) => {
                 //fs.writeFileSync(caminhoDaPasta+fileName, buffer);
             });
+            } catch (erro) {
+              console.error('Ocorreu um erro:', erro);
+            }
           }
           let event = JSON.stringify({message:message,client:client,session:session,fileName:fileName});
        try {

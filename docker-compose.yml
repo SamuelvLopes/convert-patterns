@@ -2,7 +2,7 @@ version: '3'
 
 services:
   postgres:
-    container_name: database
+    container_name: database_convertP
     image: postgres
     environment:
       POSTGRES_USER: dev

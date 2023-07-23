@@ -3,9 +3,9 @@ module.exports = {
       client: 'pg',
       connection: {
         host: 'localhost',
-        user: 'sail',
-        password: 'password',
-        database: 'api_venom'
+        user: 'dev',
+        password: 'password_dev',
+        database: 'postgres'
       },
       migrations: {
         directory: './db/migrations',
