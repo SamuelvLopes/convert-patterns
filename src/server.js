@@ -1,3 +1,34 @@
+// app.js
+
+const { FileDefineCommand, FileConverter, jpgConvertCommand, CsvToXlsConverterStrategy } = require('./entity/command');
+
+// Criando o objeto Receiver
+const filesToConvert = ['arquivo1.jpg', 'arquivo2.txt', 'arquivo3.csv'];
+
+const fileConverter = new FileConverter(filesToConvert);
+
+// Criando as estratégias de conversão
+//const txtToMdStrategy = new TxtToMdConverterStrategy();
+//const csvToXlsStrategy = new CsvToXlsConverterStrategy();
+
+// Criando os comandos com suas respectivas estratégias
+//const txtToMdCommand = new FileDefineCommand(fileConverter, txtToMdStrategy);
+//const csvToXlsCommand = new FileDefineCommand(fileConverter, csvToXlsStrategy);
+
+// Definindo a estratégia atual no FileConverter
+//fileConverter.setStrategy(txtToMdStrategy);
+
+// Executando os comandos
+//txtToMdCommand.execute();
+//csvToXlsCommand.execute();
+
+// Alterando a estratégia atual no FileConverter
+//fileConverter.setStrategy(csvToXlsStrategy);
+//fileConverter.setStrategy(txtToMdCommand);
+
+// Executando o comando novamente
+fileConverter.convert();
+
 const express = require('express');
 
 global.knex = require('knex')({
